@@ -1,4 +1,9 @@
+import sys
 from pyspark.sql import SparkSession
+
+phi_path = sys.argv[1]
+john_hopkins_path = sys.argv[2]
+output_path = sys.argv[3]
 
 spark = SparkSession. \
     builder. \
@@ -10,7 +15,7 @@ phi_df = spark. \
     format("csv"). \
     option("inferSchema","true"). \
     option("header", "true"). \
-    load("/user/hadoop/data/phi_CA.csv")
+    load(phi_path)
 
 phi_df1 = phi_df.select(phi_df.date.alias('phi_Date'), \
                         phi_df.prname.alias('phi_Province'), \
@@ -29,7 +34,7 @@ jh_df = spark. \
     schema("jh_Date date, jh_Country string, jh_Province string, jh_Lat double, jh_Long double, jh_Confirmed integer, \
             jh_Recovered integer, jh_Deaths integer"). \
     option("header", "true"). \
-    load("/user/hadoop/data/john_hopkins.csv")
+    load(john_hopkins_path)
 
 jh_df1 = jh_df.filter(jh_df.jh_Country == 'Canada')
 
@@ -56,5 +61,4 @@ df_Final = dfLeftOuterJoin.select(dfLeftOuterJoin.phi_Date.alias('Date'), \
 df_Final.write. \
          format("csv"). \
          mode("overwrite"). \
-         save("s3://covid-19-tracker-2020/output/tracker_results")
-
+         save(output_path)
