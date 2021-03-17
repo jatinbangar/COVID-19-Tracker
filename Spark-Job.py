@@ -56,7 +56,8 @@ df_Final = dfLeftOuterJoin.select(dfLeftOuterJoin.phi_Date.alias('Date'), \
                                   dfLeftOuterJoin.phi_Confirmed.alias('Confirmed'), \
                                   dfLeftOuterJoin.jh_Recovered.alias('Recovered'), \
                                   dfLeftOuterJoin.jh_Deaths.alias('Deaths') \
-                                 )
+                                 ) \
+                          .orderBy("Province", "Date", "Confirmed")
 
 df_Final.write. \
          format("csv"). \
