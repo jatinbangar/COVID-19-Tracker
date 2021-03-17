@@ -33,8 +33,8 @@ phi_df3 = phi_df2.where("phi_Province NOT IN ('Repatriated travellers', 'Canada'
 jh_df = spark. \
     read. \
     format("csv"). \
-    schema("jh_Date date, jh_Country string, jh_Province string, jh_Lat double, jh_Long double, jh_Confirmed integer, \
-            jh_Recovered integer, jh_Deaths integer"). \
+    schema("jh_Date date, jh_Country string, jh_Province string, jh_Lat double, jh_Long double, \
+            jh_Confirmed integer, jh_Recovered integer, jh_Deaths integer"). \
     option("header", "true"). \
     load(john_hopkins_path)
 
