@@ -28,6 +28,8 @@ from pyspark.sql.functions import date_format, to_date
 
 phi_df2 = phi_df1.withColumn("phi_Date", date_format(to_date(phi_df1.phi_Date, "dd-MM-yyyy"), "yyyy-MM-dd"))
 
+phi_df3 = phi_df2.where("phi_Province NOT IN ('Repatriated travellers', 'Canada')")
+
 jh_df = spark. \
     read. \
     format("csv"). \
@@ -38,9 +40,7 @@ jh_df = spark. \
 
 jh_df1 = jh_df.filter(jh_df.jh_Country == 'Canada')
 
-phi_df3 = phi_df2.where("phi_Province NOT IN ('Nunavut', 'Repatriated travellers', 'Canada')")
-
-jh_df2 = jh_df1.where("jh_Province NOT IN ('Grand Princess', 'Diamond Princess')")
+jh_df2 = jh_df1.where("jh_Province NOT IN ('Repatriated Travellers', 'Grand Princess', 'Diamond Princess')")
 
 dfLeftOuterJoin = phi_df3. \
     join(jh_df2, \
@@ -61,4 +61,4 @@ df_Final = dfLeftOuterJoin.select(dfLeftOuterJoin.phi_Date.alias('Date'), \
 df_Final.write. \
          format("csv"). \
          mode("overwrite"). \
-         save(output_path)
+         save("output_path")
