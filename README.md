@@ -1,3 +1,2 @@
 # COVID-19-Tracker
-AWS EMR cluster provisioned for analysing Public Health Infobase and John Hopkins university data.
-AWS Data Pipeline to schedule a daily running Spark Application.
+This capstone project is centered around tracking the impact of the COVID-19 pandemic across Canada. The architect behind the project has utilized various data analytics services offered by AWS to achieve the outcome. The main data engineering principles used were Data Ingestion, Data Processing/Transformation, Reporting and Visualization. The whole process provides us with insights which can be utilized by business analysts to aid with their research or by data scientists to make predictions.
